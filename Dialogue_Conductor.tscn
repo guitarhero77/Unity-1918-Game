@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://mi4tsdhtcnyr"]
+
+[ext_resource type="Script" uid="uid://bvn4g1nd01exw" path="res://dialogue_chatbox.gd" id="1_0v1sk"]
+[ext_resource type="Texture2D" uid="uid://rbhrbqov6kb2" path="res://Dialogue/glass-transparency-and-translucency-text-box-54b147ee5a86802a1aa54a5c6a846f17.png" id="2_240yn"]
+
+[node name="Dialogue_Conductor" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_0v1sk")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 0
+offset_left = -491.0
+offset_top = -478.0
+offset_right = 501.0
+offset_bottom = -83.0
+texture = ExtResource("2_240yn")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="Chat" type="RichTextLabel" parent="NinePatchRect"]
+layout_mode = 0
+offset_left = 131.0
+offset_top = 83.0
+offset_right = 371.6667
+offset_bottom = 177.33334
+scale = Vector2(3, 3)
+text = "Chatting..."
+
+[node name="Name" type="RichTextLabel" parent="NinePatchRect"]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 12.0
+offset_right = 197.0
+offset_bottom = 52.0
+scale = Vector2(3.5, 3.5)
+text = "Name:"

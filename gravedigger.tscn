@@ -1,0 +1,118 @@
+[gd_scene load_steps=18 format=3 uid="uid://dmowm04j17xvh"]
+
+[ext_resource type="Texture2D" uid="uid://cdw6h3ra3cnrn" path="res://Sprites/Gravedigger/Pixilart selection (2).png" id="1_6ylf6"]
+[ext_resource type="Script" uid="uid://dat55vdg4htf3" path="res://gravedigger.gd" id="1_oi3gw"]
+[ext_resource type="Texture2D" uid="uid://c73jc142et5go" path="res://Sprites/Gravedigger/Pixilart selection (3).png" id="2_oi3gw"]
+[ext_resource type="Texture2D" uid="uid://ddhxndm8jk3xm" path="res://Sprites/Gravedigger/Pixilart selection (4).png" id="3_52sa3"]
+[ext_resource type="Texture2D" uid="uid://dp5p256fg0nff" path="res://Sprites/Gravedigger/Pixilart selection (8).png" id="4_0cerk"]
+[ext_resource type="Texture2D" uid="uid://bbx3wk88vaakx" path="res://Sprites/Gravedigger/Pixilart selection (9).png" id="5_peqho"]
+[ext_resource type="Texture2D" uid="uid://cnblg68motrlp" path="res://Sprites/Gravedigger/Pixilart selection (10).png" id="6_wu64s"]
+[ext_resource type="Texture2D" uid="uid://fxx6387edhib" path="res://Sprites/Gravedigger/Pixilart selection (5).png" id="7_h0i10"]
+[ext_resource type="Texture2D" uid="uid://edstdue2uxtu" path="res://Sprites/Gravedigger/image (12).png" id="8_kbbxk"]
+[ext_resource type="Texture2D" uid="uid://c3cnbs0mx8kqm" path="res://Sprites/Gravedigger/Pixilart selection (7).png" id="9_gfcf0"]
+[ext_resource type="Texture2D" uid="uid://di370awc3gm1b" path="res://Sprites/Gravedigger/Pixilart selection (12).png" id="10_pmqwa"]
+[ext_resource type="Texture2D" uid="uid://b5je0brcn18st" path="res://Sprites/Gravedigger/image (13).png" id="11_fiqmh"]
+[ext_resource type="Texture2D" uid="uid://h8iips315bdy" path="res://Sprites/Gravedigger/image (15).png" id="12_5pexp"]
+[ext_resource type="PackedScene" uid="uid://gep4mllskmkk" path="res://grave_digger_di.tscn" id="14_52sa3"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ojvys"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6ylf6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_oi3gw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_52sa3")
+}],
+"loop": true,
+"name": &"BACK",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_0cerk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_peqho")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_wu64s")
+}],
+"loop": true,
+"name": &"FORWARD",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6ylf6")
+}],
+"loop": true,
+"name": &"IDLE",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_h0i10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_gfcf0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_pmqwa")
+}],
+"loop": true,
+"name": &"LEFT",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_kbbxk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_fiqmh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_5pexp")
+}],
+"loop": true,
+"name": &"RIGHT",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l4k4h"]
+size = Vector2(101, 185)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hmjls"]
+radius = 235.0
+height = 470.0
+
+[node name="Gravedigger" type="CharacterBody2D"]
+script = ExtResource("1_oi3gw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ojvys")
+animation = &"RIGHT"
+frame_progress = 0.12322112
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.5, 9.5)
+shape = SubResource("RectangleShape2D_l4k4h")
+
+[node name="chat_detection_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chat_detection_area"]
+position = Vector2(-3, 7)
+shape = SubResource("CapsuleShape2D_hmjls")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="GraveDiggerDI" parent="." instance=ExtResource("14_52sa3")]
+
+[connection signal="body_entered" from="chat_detection_area" to="." method="_on_chat_detection_area_body_entered"]
+[connection signal="body_exited" from="chat_detection_area" to="." method="_on_chat_detection_area_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="dialogue_finished" from="GraveDiggerDI" to="." method="_on_grave_digger_di_dialogue_finished"]

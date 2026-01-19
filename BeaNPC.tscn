@@ -1,0 +1,79 @@
+[gd_scene load_steps=12 format=3 uid="uid://b7cr0rxdrgenq"]
+
+[ext_resource type="Script" uid="uid://dd5wslb2y24dn" path="res://npc.gd" id="1_mobvl"]
+[ext_resource type="Texture2D" uid="uid://3ykokwkwyuoa" path="res://Sprites/NPC/TrainConductorSprite.png" id="2_tj0ca"]
+[ext_resource type="Texture2D" uid="uid://dyweaunqi55oi" path="res://Sprites/NPC/LeftConductor (1).png" id="3_p2ogt"]
+[ext_resource type="Texture2D" uid="uid://gfg77ixod51u" path="res://Sprites/NPC/LeftConductor (2).png" id="4_30ymt"]
+[ext_resource type="Texture2D" uid="uid://cuec6ui6bhtfb" path="res://Sprites/NPC/LeftConductor (3).png" id="5_aro0b"]
+[ext_resource type="Texture2D" uid="uid://di6gvmgkbkxem" path="res://Sprites/NPC/image (8).png" id="6_7t1as"]
+[ext_resource type="Texture2D" uid="uid://3ik0fnews8ph" path="res://Sprites/NPC/image (9).png" id="7_1kijl"]
+[ext_resource type="Texture2D" uid="uid://u7r1q1hamn07" path="res://Sprites/NPC/image (10).png" id="8_fghe8"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7e0na"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_tj0ca")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_p2ogt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_30ymt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_aro0b")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_7t1as")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_1kijl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_fghe8")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4wktu"]
+size = Vector2(131, 159)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_podwv"]
+radius = 209.2391
+
+[node name="NPC" type="CharacterBody2D"]
+script = ExtResource("1_mobvl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7e0na")
+animation = &"left"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_4wktu")
+
+[node name="Chatarea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chatarea"]
+shape = SubResource("CircleShape2D_podwv")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="body_entered" from="Chatarea" to="." method="_on_chatarea_body_entered"]
+[connection signal="body_exited" from="Chatarea" to="." method="_on_chatarea_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
